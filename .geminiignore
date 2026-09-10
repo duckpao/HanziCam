@@ -1,0 +1,5 @@
+# Bỏ qua bộ nhớ tạm và log của Expo / React Native
+.expo/
+*.log
+logs/
+node_modules/
