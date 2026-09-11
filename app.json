@@ -9,8 +9,10 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSCameraUsageDescription": "Ứng dụng cần quyền sử dụng camera để chụp ảnh vật thể và nhận diện chữ Hán."
-      }
+        "NSCameraUsageDescription": "Ứng dụng cần quyền sử dụng camera để chụp ảnh vật thể và nhận diện chữ Hán.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "y"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,6 +26,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b9fa6457-5e9d-4858-b923-3446da0a408f"
+      }
     }
   }
 }
