@@ -12,7 +12,7 @@
         "NSCameraUsageDescription": "Ứng dụng cần quyền sử dụng camera để chụp ảnh vật thể và nhận diện chữ Hán.",
         "ITSAppUsesNonExemptEncryption": false
       },
-      "bundleIdentifier": "y"
+      "bundleIdentifier": "com.duckpaocap2.hanzicamapp"
     },
     "android": {
       "adaptiveIcon": {

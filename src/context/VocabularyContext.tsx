@@ -1,15 +1,27 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
+export interface VocabularyItem {
+  id: string;
+  english: string;
+  hanzi: string;
+  pinyin: string;
+  hanViet: string;
+  vietnamese: string;
+}
+
 interface VocabularyContextType {
-  history: string[];
-  addWord: (word: string) => void;
+  history: VocabularyItem[];
+  addWord: (item: Omit<VocabularyItem, 'id'>) => void;
 }
 
 const VocabularyContext = createContext<VocabularyContextType | undefined>(undefined);
 
 export const VocabularyProvider = ({ children }: { children: ReactNode }) => {
-  const [history, setHistory] = useState<string[]>([]);
-  const addWord = (word: string) => setHistory((prev) => [word, ...prev]);
+  const [history, setHistory] = useState<VocabularyItem[]>([]);
+  const addWord = (item: Omit<VocabularyItem, 'id'>) => {
+    const newItem: VocabularyItem = { ...item, id: `${Date.now()}-${Math.random()}` };
+    setHistory((prev) => [newItem, ...prev]);
+  };
 
   return (
     <VocabularyContext.Provider value={{ history, addWord }}>

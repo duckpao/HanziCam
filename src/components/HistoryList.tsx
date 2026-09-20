@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { StyleSheet, ScrollView, Text } from 'react-native';
 import { Flashcard } from './Flashcard';
+import { colors } from '../theme/colors';
 
 interface HistoryListProps {
   history: string[];
@@ -20,7 +21,7 @@ export const HistoryList: React.FC<HistoryListProps> = ({ history }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.background,
     paddingTop: 20,
   },
   title: {
@@ -28,6 +29,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 20,
     marginBottom: 10,
-    color: '#333',
+    color: colors.primaryDark,
   },
 });

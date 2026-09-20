@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { CameraView as ExpoCameraView, CameraViewProps } from 'expo-camera';
+import { colors } from '../theme/colors';
 
 interface CameraComponentProps extends CameraViewProps {
   cameraRef: React.RefObject<any>;
@@ -41,19 +42,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   captureButton: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    borderWidth: 4,
-    borderColor: '#fff',
+    width: 84,
+    height: 84,
+    borderRadius: 42,
+    borderWidth: 5,
+    borderColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
   },
   captureButtonInner: {
-    width: 65,
-    height: 65,
-    borderRadius: 32.5,
-    backgroundColor: '#fff',
+    width: 66,
+    height: 66,
+    borderRadius: 33,
+    backgroundColor: colors.primary,
   },
   disabledButton: {
     opacity: 0.5,

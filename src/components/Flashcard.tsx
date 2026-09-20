@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import { colors, radius } from '../theme/colors';
 
 interface FlashcardProps {
   content: string;
@@ -8,6 +9,7 @@ interface FlashcardProps {
 export const Flashcard: React.FC<FlashcardProps> = ({ content }) => {
   return (
     <View style={styles.card}>
+      <View style={styles.accentBar} />
       <Text style={styles.text}>{content}</Text>
     </View>
   );
@@ -15,20 +17,27 @@ export const Flashcard: React.FC<FlashcardProps> = ({ content }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 15,
-    marginVertical: 10,
+    flexDirection: 'row',
+    backgroundColor: colors.card,
+    borderRadius: radius.md,
+    marginVertical: 8,
     marginHorizontal: 15,
-    shadowColor: '#000',
+    overflow: 'hidden',
+    shadowColor: colors.primaryDark,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.12,
     shadowRadius: 4,
     elevation: 3,
   },
+  accentBar: {
+    width: 6,
+    backgroundColor: colors.primary,
+  },
   text: {
+    flex: 1,
+    padding: 20,
     fontSize: 16,
-    color: '#333',
+    color: colors.text,
     lineHeight: 24,
   },
 });

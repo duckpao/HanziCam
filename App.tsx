@@ -13,6 +13,7 @@ import { useCameraPermissions } from "expo-camera";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CameraComponent } from "./src/components/CameraComponent";
 import { useVocabulary } from "./src/context/VocabularyContext";
+import { colors, radius } from "./src/theme/colors";
 
 
 export default function App() {
@@ -45,7 +46,9 @@ export default function App() {
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
     const promptText =
-      "Nhận diện vật thể, trả về: Tên tiếng Anh, Chữ Hán, Pinyin, nghĩa Hán Việt, Nghĩa Tiếng Việt.";
+      "Nhận diện vật thể chính trong ảnh và trả lời DUY NHẤT bằng một object JSON hợp lệ, " +
+      "không thêm chữ nào khác, không dùng markdown, theo đúng schema: " +
+      '{"english":"Tên tiếng Anh","hanzi":"Chữ Hán","pinyin":"Pinyin","hanViet":"Nghĩa Hán Việt","vietnamese":"Nghĩa Tiếng Việt"}';
 
     try {
       const response = await fetch(url, {
@@ -64,9 +67,18 @@ export default function App() {
       });
 
       const data = await response.json();
-      const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      const textResponse: string | undefined =
+        data.candidates?.[0]?.content?.parts?.[0]?.text;
       if (textResponse && addWord) {
-        addWord(textResponse);
+        const jsonText = textResponse
+          .replace(/```json/gi, "")
+          .replace(/```/g, "")
+          .trim();
+        const parsed = JSON.parse(jsonText);
+        const { english, hanzi, pinyin, hanViet, vietnamese } = parsed;
+        if (english && hanzi && pinyin && hanViet && vietnamese) {
+          addWord({ english, hanzi, pinyin, hanViet, vietnamese });
+        }
       }
     } catch (error) {
       console.error(error);
@@ -98,7 +110,7 @@ export default function App() {
         />
         {loading && (
           <View style={styles.loadingOverlay}>
-            <ActivityIndicator size="large" color="#fff" />
+            <ActivityIndicator size="large" color={colors.primary} />
           </View>
         )}
       </View>
@@ -107,16 +119,32 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
-  centerContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
+  container: { flex: 1, backgroundColor: colors.background },
+  centerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.background,
+    paddingHorizontal: 24,
+  },
   cameraContainer: { flex: 1 },
   loadingOverlay: {
     ...StyleSheet.absoluteFill,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: colors.overlay,
   },
-  message: { textAlign: "center", marginBottom: 10 },
-  button: { backgroundColor: "#007AFF", padding: 10, borderRadius: 5 },
-  buttonText: { color: "#fff" },
+  message: {
+    textAlign: "center",
+    marginBottom: 16,
+    fontSize: 16,
+    color: colors.text,
+  },
+  button: {
+    backgroundColor: colors.primary,
+    paddingVertical: 12,
+    paddingHorizontal: 28,
+    borderRadius: radius.pill,
+  },
+  buttonText: { color: colors.white, fontWeight: "600", fontSize: 16 },
 });
